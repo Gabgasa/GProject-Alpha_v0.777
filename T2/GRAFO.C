@@ -41,7 +41,7 @@
 *
 ***********************************************************************/
 
-typedef struct tagElemGrafo {
+typedef struct tpElemGrafo {
 
          struct LIS_tppLista * pAresta ;
                /* Ponteiro para a aresta do elemento */
@@ -103,7 +103,7 @@ typedef struct tagElemGrafo {
 
    /***************************************************************************
 *
-*  Função: LIS  &Destruir lista
+*  Função: GRF  &Destruir Grafo
 *  ****/
 
    void GRF_DestruirGrafo( GRF_tppGrafo pCab )
@@ -188,3 +188,44 @@ typedef struct tagElemGrafo {
       return pCab->pElemCorr;
 
    } /* Fim função: GRF  &Obter referência para o vértice contido na lista Vértices */
+
+/***************************************************************************
+*
+*  Função: GRF  &Criar Aresta
+*  ****/
+
+//A função vai pegar dois vértices e vai formar uma aresta entre eles
+void GRF_CriarAresta( tpElemGrafo pVertice1, tpElemGrafo pVertice2 )
+{
+	tpElemGrafo *Elem1 = pVertice1; 
+	tpElemGrafo *Elem2 = pVertice2;
+	LIS_tpCondRet Resultado_Aresta1;
+	LIS_tpCondRet Resultado_Aresta2;
+	
+	#ifdef _DEBUG
+	assert( Elem1->pVertice != NULL && Elem2->pVertice != NULL );
+	#endif
+
+	
+	//Criando lista de aresta em Elem1 caso ela não exista
+	if ( Elem1->pAresta == NULL )
+	{
+		Elem1->pAresta = LIS_CriarLista( ExcluirValor );
+	} /* if */
+	//Criando lista de aresta em Elem2 caso ela não exista
+	if ( Elem2->pAresta == NULL ){
+		Elem2->pAresta = LIS_CriarLista( ExcluirValor );
+	 } /* if */
+	//Verifica se a aresta já existe, caso não exista adiciona elemento nas listas de arestas dos dois elementos
+	if ( LIS_ProcurarValor ( Elem1->pAresta , Elem2 ) == LIS_CondRetNaoEncontrou )
+	{
+		if ( LIS_ProcuraValor ( Elem2->pAresta , Elem1 ) == LIS_CondRetNaoEncontrou )
+		{
+			Resultado_Aresta1 = LIS_InserirElementoApos( Elem1->pAresta, Elem2);	
+			Resultado_Aresta2 = LIS_InserirElementoApos( Elem2->pAresta, Elem1);
+		} /* if */
+	} /* if */
+	
+	/* Fim função: GRF &Criar Aresta */	
+}
+
