@@ -257,3 +257,39 @@ typedef struct tagElemGrafo {
       return pCab->pElemCorr;
 
    } /* Fim função: GRF  &Obter referência para o vértice contido na lista Vértices */
+
+/***************************************************************************
+*
+*  Função: GRF  &Destruir Aresta
+*  ****/
+
+   void * GRF_DestruirAresta( GRF_tppGrafo pCab, void *pValor )
+   {
+	
+      #ifdef _DEBUG
+         assert( pCab != NULL ) ;
+      #endif
+
+      if ( pCab->pElemCorr == NULL )
+      {
+      	return NULL ;
+      } /* if */
+      
+      tppGrafo *Vertice1 = pCab_pElemCorr;
+      tppGrafo *Vertice2 ;
+    
+      while( pCab->pElemCorr != NULL)
+      {
+	      if ( LIS_ObterValor ( pCab->pElemCorr )== pValor)
+	      {
+		      Vertice2 = pCab->pElemCorr;
+	      }
+	      LIS_AvancarElementoCorrente ( pCab, 1 ) ;
+      }
+      LIS_ProcurarValor( Vertice1->pAresta, LIS_ObterValor (Vertice2) ) ;
+      LIS_ExcluirElemento( Vertice1 ) ;	   
+      LIS_ProcurarValor( Vertice2->pAresta, LIS_ObterValor (Vertice1) ) ;
+      
+	   (INCOMPLETA)
+	   
+   } /* Fim função: GRF  &Obter referência para o vértice contido na lista Vértices */
